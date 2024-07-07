@@ -124,6 +124,8 @@ class App:
             except:
                 print(f"Could not print {target}")
 
+        self.targets = []
+
     def print_menu(self) -> None:
         for key in self.menu_items.keys():
             print(f"{key}:\t{self.menu_items[key][0]}")
