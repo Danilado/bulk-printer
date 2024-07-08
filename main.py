@@ -16,9 +16,10 @@ class App:
             2: ("Add forbidden prefixes", self.add_forbidden_prefixes),
             3: ("Add forbidden suffixes", self.add_forbidden_suffixes),
             4: ("Add target folders", self.add_target_folders),
-            5: ("Scan target folders for matching files", self.scan),
-            6: ("Remove files from list by index", self.remove_by_indexes),
-            7: ("Print files in list", self.print_all),
+            5: ("Add target folder (only one, supports whitespaces)", self.add_target_folder),
+            6: ("Scan target folders for matching files", self.scan),
+            7: ("Remove files from list by index", self.remove_by_indexes),
+            8: ("Print files in list", self.print_all),
             0: ("Exit", self.stop)
         }
 
@@ -71,6 +72,23 @@ class App:
                 continue
 
             self.target_folders.append(fpath)
+
+    def add_target_folder(self) -> None:
+        print(f"Input folder name to scan")
+        data = input("> ").strip()
+
+        fpath = Path(data).resolve()
+        if not fpath.exists():
+            print(f"Folder {fpath} not found")
+            return
+        if not fpath.is_dir():
+            print(f"{fpath} is not a folder")
+            return
+        if fpath in self.target_folders:
+            print(f"{fpath} already in list")
+            return
+
+        self.target_folders.append(fpath)
 
     def scan(self) -> None:
         if len(self.target_folders) == 0:
